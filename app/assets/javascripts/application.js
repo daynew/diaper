@@ -24,6 +24,7 @@
 //= require toastr
 //= require Chart.bundle
 //= require chartkick
+//= require highcharts
 //= require moment
 //= require fullcalendar
 //= require quagga
@@ -59,7 +60,7 @@ $(document).ready(function () {
     firstDay: 1,
     displayEventTime: true,
     eventLimit: true,
-    events: 'pick_ups.json',
+    events: 'schedule.json',
     height: isMobile || isShortHeight ? 'auto' : 'parent',
     defaultView: isMobile ? 'listWeek' : 'month'
   });

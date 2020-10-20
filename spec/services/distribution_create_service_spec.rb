@@ -2,7 +2,7 @@ RSpec.describe DistributionCreateService, type: :service do
   subject { DistributionCreateService }
   describe "call" do
     let!(:storage_location) { create(:storage_location, :with_items, item_count: 2) }
-    let!(:distribution_params) { { organization_id: @organization.id, partner_id: @partner.id, storage_location_id: storage_location.id, line_items_attributes: { "0": { item_id: storage_location.items.first.id, quantity: 5 } } } }
+    let!(:distribution_params) { { organization_id: @organization.id, partner_id: @partner.id, storage_location_id: storage_location.id, delivery_method: :delivery, line_items_attributes: { "0": { item_id: storage_location.items.first.id, quantity: 5 } } } }
 
     it "replaces a big distribution with a smaller one, resulting in increased stored quantities" do
       expect do
@@ -22,9 +22,8 @@ RSpec.describe DistributionCreateService, type: :service do
         @partner.update!(send_reminders: true)
         allow(Flipper).to receive(:enabled?).with(:email_active).and_return(true)
 
-        result = subject.new(distribution_params).call
-
-        expect(PartnerMailerJob).to have_enqueued_sidekiq_job(@organization.id, result.distribution.id, "Your Distribution")
+        expect(PartnerMailerJob).to receive(:perform_now).once
+        subject.new(distribution_params).call
       end
     end
 
@@ -33,7 +32,7 @@ RSpec.describe DistributionCreateService, type: :service do
         @partner.update!(send_reminders: false)
         allow(Flipper).to receive(:enabled?).with(:email_active).and_return(true)
 
-        expect(PartnerMailerJob).not_to receive(:perform_async)
+        expect(PartnerMailerJob).not_to receive(:perform_now)
         subject.new(distribution_params).call
       end
     end
@@ -50,7 +49,7 @@ RSpec.describe DistributionCreateService, type: :service do
     end
 
     context "when there's not sufficient inventory" do
-      let(:too_much_params) { { organization_id: @organization.id, partner_id: @partner.id, storage_location_id: storage_location.id, line_items_attributes: { "0": { item_id: storage_location.items.first.id, quantity: 500 } } } }
+      let(:too_much_params) { { organization_id: @organization.id, partner_id: @partner.id, storage_location_id: storage_location.id, delivery_method: :delivery, line_items_attributes: { "0": { item_id: storage_location.items.first.id, quantity: 500 } } } }
 
       it "preserves the Insufficiency error and is unsuccessful" do
         result = subject.new(too_much_params).call
@@ -65,6 +64,7 @@ RSpec.describe DistributionCreateService, type: :service do
           organization_id: @organization.id,
           partner_id: @partner.id,
           storage_location_id: storage_location.id,
+          delivery_method: :delivery,
           line_items_attributes:
             {
               "0": { item_id: storage_location.items.first.id, quantity: 2 },

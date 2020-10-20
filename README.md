@@ -8,16 +8,16 @@ If you're new here, here are some things you should know:
  - Check the `CONTRIBUTING.md` file for a guide on how to get started
  - This is a 100% volunteer-supported project, please be patient with your correspondence. We do handle issues and PRs with more fervor during Hacktoberfest & Conferences, but most (all?) of us have day jobs and so responses to questions / pending PRs may not be immediate. Please be patient, we'll get to you! :)
 
-Please feel free to join us on Slack! You can sign up at https://rubyforgood.org -- click on the Slack icon at the top to get an invite. We're in #diaper
+Please feel free to join us on Slack! You can sign up at https://rubyforgood.herokuapp.com We're in #diaper
 
-The core team leads are: @armahillo @seanmarcia @mdworken @benreyn
+The core team leads are: @edwinmak @albert @gia @sean @scott
 There are numerous other folks that can chime in and answer questions -- please ask and someone will probably be there to help!
 
 # README
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/f100428ab2af34c142b7/maintainability)](https://codeclimate.com/github/rubyforgood/diaper/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/f100428ab2af34c142b7/test_coverage)](https://codeclimate.com/github/rubyforgood/diaper/test_coverage)
-[![Build Status](https://travis-ci.org/rubyforgood/diaper.svg?branch=master)](https://travis-ci.org/rubyforgood/diaper) [![View performance data on Skylight](https://badges.skylight.io/status/LrXHcxDK7Be9.svg)](https://oss.skylight.io/app/applications/LrXHcxDK7Be9)
+[![Build Status](https://travis-ci.org/rubyforgood/diaper.svg?branch=main)](https://travis-ci.org/rubyforgood/diaper) [![View performance data on Skylight](https://badges.skylight.io/status/LrXHcxDK7Be9.svg)](https://oss.skylight.io/app/applications/LrXHcxDK7Be9)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Frubyforgood%2Fdiaper.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Frubyforgood%2Fdiaper?ref=badge_shield)
 
 ## About
@@ -34,10 +34,10 @@ This project took what we built for the [Portland Diaper Bank in 2016](https://g
 
 ### Installation Instructions
 
-The `installation.md` file ([https://github.com/rubyforgood/diaper/blob/master/installation.md](https://github.com/rubyforgood/diaper/blob/master/installation.md)) has detailed instructions for installation and configuration of an Ubuntu host to run this software. Although there is not a document for Mac OS, it may be helpful for that as well.
+The `installation.md` file ([https://github.com/rubyforgood/diaper/blob/main/installation.md](https://github.com/rubyforgood/diaper/blob/main/installation.md)) has detailed instructions for installation and configuration of an Ubuntu host to run this software. Although there is not a document for Mac OS, it may be helpful for that as well.
 
 ### Ruby Version
-This app uses Ruby version 2.7.1, indicated in `/.ruby-version` and `Gemfile`, which will be auto-selected if you use a Ruby versioning manager like `rvm`, `rbenv`, or `asdf`.
+This app uses Ruby version 2.7.2, indicated in `/.ruby-version` and `Gemfile`, which will be auto-selected if you use a Ruby versioning manager like `rvm`, `rbenv`, or `asdf`.
 
 ### Yarn Installation
 If you don't have Yarn installed, you can install with Homebrew on macOS `brew install yarn` or visit [https://yarnpkg.com/en/docs/install](https://yarnpkg.com/en/docs/install). Be sure to run `yarn install` after installing Yarn. NOTE: It's possible that Node version 12 may cause you problems, see issue #751. Node 10 or 11 seem to be fine.
@@ -159,7 +159,7 @@ Sometimes we want to get a PR up there and going so that other people can review
 Users that are frequent contributors and are involved in discussion (join the slack channel! :)) may be given direct Contributor access to the Repo so they can submit Pull Requests directly, instead of Forking first.
 
 # Deployment Process
-The diaper & partner application should be deployed ideally on a weekly or bi-weekly schedule. However, this depends on the amount of updates that we have merged into master. Assuming there is updates that we want to ship into deploy, this is the process we take to getting updates from our `master` branch deployed to our servers.
+The diaper & partner application should be deployed ideally on a weekly or bi-weekly schedule. However, this depends on the amount of updates that we have merged into main. Assuming there is updates that we want to ship into deploy, this is the process we take to getting updates from our `main` branch deployed to our servers.
 
 #### Requirements
 - You will need SSH access to our servers. Access is usually only given to core maintainers of the diaper & partner projects.

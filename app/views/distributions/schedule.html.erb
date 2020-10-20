@@ -4,9 +4,9 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-7">
-          <% content_for :title, "Distribution Pick-Ups - #{current_organization.name}" %>
+          <% content_for :title, "Distribution Schedule - #{current_organization.name}" %>
           <h1>
-            Pick-Up Schedule
+            Distribution Schedule
             <small>for <%= current_organization.name %></small>
           </h1>
         </div>
@@ -17,7 +17,7 @@
               <% end %>
             </li>
             <li class="breadcrumb-item"><a href="#"><%= link_to "Distributions", (distributions_path) %></a></li>
-            <li class="breadcrumb-item active"><a href="#">Pick-Ups</a></li>
+            <li class="breadcrumb-item active"><a href="#">Schedule</a></li>
           </ol>
         </div>
       </div>

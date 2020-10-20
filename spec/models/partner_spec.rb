@@ -5,6 +5,8 @@
 #  id              :integer          not null, primary key
 #  email           :string
 #  name            :string
+#  notes           :text
+#  quota           :integer
 #  send_reminders  :boolean          default(FALSE), not null
 #  status          :integer          default("uninvited")
 #  created_at      :datetime         not null
@@ -39,6 +41,11 @@ RSpec.describe Partner, type: :model do
       create(:partner, email: "foo@bar.com")
       expect(build(:partner, email: "foo@bar.com")).not_to be_valid
       expect(build(:partner, email: "boooooooooo")).not_to be_valid
+    end
+
+    it "validates the quota is a number but it is not required" do
+      is_expected.to validate_numericality_of(:quota)
+      expect(build(:partner, email: "foo@bar.com", quota: "")).to be_valid
     end
   end
 
@@ -142,6 +149,31 @@ RSpec.describe Partner, type: :model do
     end
   end
 
+  describe "#csv_export_attributes" do
+    let!(:partner) { create(:partner) }
+    let(:partnerbase_partner) do
+      {
+        agency: {
+          contact_person: {
+            name: "Jon Ralfeo",
+            phone: "1231231234",
+            email: "jon@entertainment720.com"
+          }
+        }
+      }.to_json
+    end
+
+    before do
+      allow(DiaperPartnerClient).to receive(:get).with({ id: partner.id }) { partnerbase_partner }
+    end
+
+    it "includes contact person information from parnerbase" do
+      expect(partner.csv_export_attributes).to include("Jon Ralfeo")
+      expect(partner.csv_export_attributes).to include("1231231234")
+      expect(partner.csv_export_attributes).to include("jon@entertainment720.com")
+    end
+  end
+
   describe '#quantity_year_to_date' do
     let(:partner) { create(:partner) }
     before do
@@ -157,6 +189,18 @@ RSpec.describe Partner, type: :model do
     it "does not include quantities from last year" do
       LineItem.last.update(created_at: Time.zone.today.beginning_of_year - 20)
       expect(partner.quantity_year_to_date).to eq(200)
+    end
+  end
+
+  describe "ActiveStorage validation" do
+    it "validates that attachments are pdf or docs" do
+      partner = build(:partner, documents: [Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/logo.jpg"), "image/jpeg")])
+
+      expect(partner).to_not be_valid
+
+      partner = build(:partner, documents: [Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/dbase.pdf"), "application/pdf")])
+
+      expect(partner).to be_valid
     end
   end
 end

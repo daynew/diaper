@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby "2.7.1"
+ruby "2.7.2"
 
 gem "api-auth", "~> 2.4"
 gem 'bootstrap', '~> 4.5.2'
@@ -31,6 +31,7 @@ gem "image_processing"
 gem "jbuilder"
 gem "jquery-rails"
 gem "jquery-ui-rails"
+gem "jwt"
 gem "kaminari"
 gem "mini_racer", "~> 0.3.1"
 gem "momentjs-rails"
@@ -55,6 +56,7 @@ gem "yajl-ruby"
 
 group :development, :test do
   gem "awesome_print"
+  gem "brakeman"
   gem "fakeredis", require: "fakeredis/rspec"
   gem "guard-rspec"
   gem "pry-rails"
@@ -63,7 +65,7 @@ group :development, :test do
   gem 'rb-readline', '~> 0.5.3'
   gem "rspec-rails", "~> 4.0.1"
   gem "rubocop"
-  gem "rubocop-rails", "~> 2.8.0"
+  gem "rubocop-rails", "~> 2.8.1"
   gem "terminal-notifier-guard"
   gem "terminal-notifier"
   gem "faker"
@@ -96,8 +98,9 @@ group :test do
   gem "rails-controller-testing"
   gem "rspec-sidekiq"
   gem 'simplecov'
+  gem 'shoulda-matchers', '~> 4.4'
   gem 'webdrivers', '~> 4.4'
-  gem "webmock", "~> 3.8"
+  gem "webmock", "~> 3.9"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
